@@ -1,2 +1,3 @@
 # MIPS
-Simple MIPS programs
+
+Simple MIPS architecture programs.

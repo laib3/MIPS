@@ -1,3 +1,3 @@
 # MIPS
 
-Simple MIPS architecture programs.
+Simple MIPS architecture programs (tested on winMIPS emulator).

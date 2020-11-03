@@ -20,12 +20,12 @@ LOOP:
   mul.d F4, F4, F3	  ;F4 = (v1[i] - v2[i]) * v3[i]
   s.d F4, v5(R1)	  ;v5[i] = (v1[i] - v2[i]) * v3[i]
   mul.d F4, F4, F3	  ;F4 = v5[i] * v3[i]
-  daddi R1, R1, 8	  ;increment index
   s.d F4, v6(R1)	  ;v6[i] = v5[i] * v3[i]
   add.d F4, F4, F5	  ;F4 = v4[i] + v6[i]
   mul.d F4, F4, F2	  ;F4 = (v4[i] + v6[i]) * v2[i]
-  daddi R2, R1, -240  ;if(R1 < 240) R2 = 1
   s.d F4, v7(R1)	  ;v7[i] = (v4[i] + v6[i]) * v2[i] 
+  daddi R1, R1, 8	  ;increment index
+  daddi R2, R1, -240  ;if(R1 < 240) R2 = 1
   bnez R2, LOOP		  
   halt
   

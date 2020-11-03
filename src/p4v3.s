@@ -1,5 +1,5 @@
-;optimize the program p4v2.s by enabling the branch delay and 
-;and reschedule the code in order to exploit the branch delay slot
+;optimize the program p4v2.s by exploiting the branch delay 
+;and rescheduling the code as needed.
 
 .data
   v1: .double 2.3, 2.8, 2.0, 0.6, 4.8, 2.0, 4.5, 4.1, 4.2, 2.7, 2.6, 4.5, 2.7, 2.3, 2.1, 4.4, 1.3, 2.1, 2.8, 4.7, 4.3, 0.5, 3.2, 3.7, 3.7, 4.0, 3.5, 3.8, 0.9, 4.9
@@ -11,8 +11,8 @@
   v7: .space 240
 .text
   daddi R1, R0, 0	  ;set index to position 0
-LOOP:
   l.d F1, v1(R1)	  
+LOOP:
   l.d F2, v2(R1)
   l.d F3, v3(R1)
   l.d F5, v4(R1)	  
@@ -20,13 +20,14 @@ LOOP:
   mul.d F4, F4, F3	  ;F4 = (v1[i] - v2[i]) * v3[i]
   s.d F4, v5(R1)	  ;v5[i] = (v1[i] - v2[i]) * v3[i]
   mul.d F4, F4, F3	  ;F4 = v5[i] * v3[i]
-  daddi R1, R1, 8	  ;increment index
   s.d F4, v6(R1)	  ;v6[i] = v5[i] * v3[i]
   add.d F4, F4, F5	  ;F4 = v4[i] + v6[i]
   mul.d F4, F4, F2	  ;F4 = (v4[i] + v6[i]) * v2[i]
+  s.d F4, v7(R1)	  ;v7[i] = (v4[i] + v6[i]) * v2[i] 
+  daddi R1, R1, 8	  ;increment index
   daddi R2, R1, -240  ;if(R1 < 240) R2 = 1
   bnez R2, LOOP		  
-  s.d F4, v7(R1)	  ;v7[i] = (v4[i] + v6[i]) * v2[i] 
+  l.d F1, v1(R1)	  
   halt
   
 

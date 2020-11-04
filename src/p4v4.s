@@ -13,7 +13,7 @@
   v7: .space 240
 .text
   daddi R1, R0, 0	  ;set index to position 0
-LOOP:
+
   l.d F1, v1(R1)	  
   l.d F2, v2(R1)
   l.d F3, v3(R1)
